@@ -1,4 +1,4 @@
-# Code Formatter - Modular Architecture
+# 🎨 Code Formatter - Modular Architecture
 
 ## 📁 **Project Structure**
 
@@ -25,23 +25,23 @@ scripts/
 
 ### **Separation of Concerns**
 
-* ✅ **Interfaces**: Type definitions isolated in separate files
-* ✅ **Utils**: Reusable utility functions with single responsibilities
-* ✅ **Constants**: Configuration separated from logic
-* ✅ **Core**: Main business logic in dedicated class
+- ✅ **Interfaces**: Type definitions isolated in separate files
+- ✅ **Utils**: Reusable utility functions with single responsibilities
+- ✅ **Constants**: Configuration separated from logic
+- ✅ **Core**: Main business logic in dedicated class
 
 ### **Maintainability**
 
-* ✅ **Modular**: Easy to modify individual components
-* ✅ **Testable**: Each utility can be unit tested independently
-* ✅ **Readable**: Clear file organization and naming
-* ✅ **Scalable**: Easy to add new file types or utilities
+- ✅ **Modular**: Easy to modify individual components
+- ✅ **Testable**: Each utility can be unit tested independently
+- ✅ **Readable**: Clear file organization and naming
+- ✅ **Scalable**: Easy to add new file types or utilities
 
 ### **Type Safety**
 
-* ✅ **Interfaces**: Proper TypeScript interfaces for all data structures
-* ✅ **Barrel Exports**: Clean import statements
-* ✅ **Type Checking**: Full type coverage across all modules
+- ✅ **Interfaces**: Proper TypeScript interfaces for all data structures
+- ✅ **Barrel Exports**: Clean import statements
+- ✅ **Type Checking**: Full type coverage across all modules
 
 ## 🚀 **Usage**
 
@@ -141,21 +141,21 @@ export class CustomFormatter extends FileFormatter {
 
 ## 🎯 **Key Features**
 
-* **Single Progress Bar**: Clean, updating progress indicator
-* **Modular Design**: Well-organized, maintainable code structure
-* **Type Safety**: Full TypeScript coverage with proper interfaces
-* **Extensible**: Easy to add new file types and formatters
-* **Professional Logging**: Colored, timestamped output
-* **Error Handling**: Comprehensive error management
-* **Performance Tracking**: Detailed timing and statistics
+- **Single Progress Bar**: Clean, updating progress indicator
+- **Modular Design**: Well-organized, maintainable code structure
+- **Type Safety**: Full TypeScript coverage with proper interfaces
+- **Extensible**: Easy to add new file types and formatters
+- **Professional Logging**: Colored, timestamped output
+- **Error Handling**: Comprehensive error management
+- **Performance Tracking**: Detailed timing and statistics
 
 ## 📊 **Performance**
 
 The modular design maintains the same performance as the monolithic version while providing:
 
-* Better code organization
-* Easier testing and debugging
-* Improved maintainability
-* Enhanced extensibility
+- Better code organization
+- Easier testing and debugging
+- Improved maintainability
+- Enhanced extensibility
 
 Perfect for professional development environments! 🚀

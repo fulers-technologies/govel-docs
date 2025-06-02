@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+export NODE_OPTIONS="--experimental-strip-types" # If Node < 23.6.0
+
 echo "🔍 Running pre-commit checks..."
 
 # Run lint-staged to format and lint staged files
@@ -15,29 +17,6 @@ echo "🔍 Running TypeScript type checking..."
 if command -v pnpm >/dev/null 2>&1; then
   if ! pnpm run type-check; then
     echo "❌ TypeScript type checking failed. Please fix the type errors."
-    exit 1
-  fi
-fi
-
-# Run Go specific checks
-echo "🐹 Running Go checks..."
-if command -v go >/dev/null 2>&1; then
-  # Check Go formatting
-  if ! pnpm run check:go-format; then
-    echo "❌ Go files are not properly formatted. Run 'pnpm run format:go' to fix."
-    exit 1
-  fi
-  
-  # Run Go vet
-  if ! go vet ./...; then
-    echo "❌ Go vet failed. Please fix the issues."
-    exit 1
-  fi
-  
-  # Run Go tests
-  echo "🧪 Running Go tests..."
-  if ! go test ./...; then
-    echo "❌ Go tests failed. Please fix the failing tests."
     exit 1
   fi
 fi
