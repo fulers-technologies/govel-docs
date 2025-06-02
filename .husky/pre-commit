@@ -1,0 +1,70 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Run lint-staged to format and lint staged files
+pnpm run lint:staged
+
+# Check if there are any formatting issues
+echo "📝 Checking code formatting..."
+pnpm run check:format
+
+# Run TypeScript type checking
+echo "🔍 Running TypeScript type checking..."
+if command -v pnpm >/dev/null 2>&1; then
+  if ! pnpm run type-check; then
+    echo "❌ TypeScript type checking failed. Please fix the type errors."
+    exit 1
+  fi
+fi
+
+# Run Go specific checks
+echo "🐹 Running Go checks..."
+if command -v go >/dev/null 2>&1; then
+  # Check Go formatting
+  if ! pnpm run check:go-format; then
+    echo "❌ Go files are not properly formatted. Run 'pnpm run format:go' to fix."
+    exit 1
+  fi
+  
+  # Run Go vet
+  if ! go vet ./...; then
+    echo "❌ Go vet failed. Please fix the issues."
+    exit 1
+  fi
+  
+  # Run Go tests
+  echo "🧪 Running Go tests..."
+  if ! go test ./...; then
+    echo "❌ Go tests failed. Please fix the failing tests."
+    exit 1
+  fi
+fi
+
+# Check for large files
+echo "📏 Checking for large files..."
+git diff --cached --name-only | while read file; do
+  if [ -f "$file" ]; then
+    size=$(wc -c < "$file")
+    if [ $size -gt 1048576 ]; then # 1MB
+      echo "❌ File $file is larger than 1MB ($size bytes). Consider using Git LFS."
+      exit 1
+    fi
+  fi
+done
+
+# Check for secrets (basic check)
+echo "🔐 Checking for potential secrets..."
+if git diff --cached --name-only | xargs grep -l -i -E "(password|secret|key|token|api_key)" 2>/dev/null; then
+  echo "⚠️  Warning: Potential secrets detected in staged files. Please review."
+  echo "If these are not actual secrets, you can proceed. Otherwise, please remove them."
+  read -p "Continue anyway? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+fi
+
+echo "✅ Pre-commit checks passed! 🎉"
+

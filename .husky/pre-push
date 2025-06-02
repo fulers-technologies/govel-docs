@@ -1,0 +1,111 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Running pre-push checks..."
+
+# Get the current branch name
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+echo "📍 Current branch: $current_branch"
+
+# Prevent pushing to main/master branch directly
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "master" ]; then
+  echo "❌ Direct push to $current_branch branch is not allowed!"
+  echo "💡 Please create a feature branch and submit a pull request."
+  echo ""
+  echo "🔧 To create a feature branch:"
+  echo "   git checkout -b feature/your-feature-name"
+  echo "   git push -u origin feature/your-feature-name"
+  echo ""
+  exit 1
+fi
+
+# Run comprehensive tests
+echo "🧪 Running comprehensive test suite..."
+
+# Run TypeScript type checking
+echo "🔍 Running TypeScript type checking..."
+if command -v pnpm >/dev/null 2>&1; then
+  if ! pnpm run type-check; then
+    echo "❌ TypeScript type checking failed. Please fix the type errors before pushing."
+    exit 1
+  fi
+fi
+
+# Run Go tests with coverage
+if command -v go >/dev/null 2>&1; then
+  echo "🐹 Running Go tests with coverage..."
+  if ! go test -v -race -coverprofile=coverage.out ./...; then
+    echo "❌ Go tests failed. Please fix the failing tests before pushing."
+    exit 1
+  fi
+  
+  # Check test coverage
+  coverage=$(go tool cover -func=coverage.out | grep total | awk '{print $3}' | sed 's/%//')
+  if [ -n "$coverage" ]; then
+    echo "📊 Test coverage: $coverage%"
+    # You can set a minimum coverage threshold here
+    # if (( $(echo "$coverage < 80" | bc -l) )); then
+    #   echo "❌ Test coverage is below 80%. Current: $coverage%"
+    #   exit 1
+    # fi
+  fi
+fi
+
+# Run linting
+echo "🔍 Running linting checks..."
+if ! pnpm run lint:all; then
+  echo "❌ Linting failed. Please fix the issues before pushing."
+  exit 1
+fi
+
+# Check for TODO/FIXME comments in staged files
+echo "📝 Checking for TODO/FIXME comments..."
+todo_count=$(git diff origin/$current_branch..HEAD --name-only | xargs grep -l -i -E "(TODO|FIXME|XXX|HACK)" 2>/dev/null | wc -l)
+if [ $todo_count -gt 0 ]; then
+  echo "⚠️  Warning: Found $todo_count file(s) with TODO/FIXME comments:"
+  git diff origin/$current_branch..HEAD --name-only | xargs grep -n -i -E "(TODO|FIXME|XXX|HACK)" 2>/dev/null || true
+  echo ""
+  echo "💡 Consider addressing these before pushing to maintain code quality."
+  read -p "Continue anyway? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+fi
+
+# Check for console.log/print statements (basic check)
+echo "🖨️  Checking for debug statements..."
+debug_count=$(git diff origin/$current_branch..HEAD --name-only | xargs grep -l -i -E "(console\.log|print\(|fmt\.Print)" 2>/dev/null | wc -l)
+if [ $debug_count -gt 0 ]; then
+  echo "⚠️  Warning: Found $debug_count file(s) with potential debug statements:"
+  git diff origin/$current_branch..HEAD --name-only | xargs grep -n -i -E "(console\.log|print\(|fmt\.Print)" 2>/dev/null || true
+  echo ""
+  echo "💡 Consider removing debug statements before pushing."
+  read -p "Continue anyway? (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+fi
+
+# Check if package.json and pnpm-lock.yaml are in sync
+if [ -f "package.json" ] && [ -f "pnpm-lock.yaml" ]; then
+  echo "📦 Checking package.json and pnpm-lock.yaml sync..."
+  if ! pnpm install --frozen-lockfile --dry-run >/dev/null 2>&1; then
+    echo "❌ package.json and pnpm-lock.yaml are out of sync!"
+    echo "💡 Run 'pnpm install' to fix this issue."
+    exit 1
+  fi
+fi
+
+# Check for merge conflicts markers
+echo "🔀 Checking for merge conflict markers..."
+if git diff origin/$current_branch..HEAD --name-only | xargs grep -l -E "(<<<<<<<|=======|>>>>>>>)" 2>/dev/null; then
+  echo "❌ Merge conflict markers found in files:"
+  git diff origin/$current_branch..HEAD --name-only | xargs grep -n -E "(<<<<<<<|=======|>>>>>>>)" 2>/dev/null
+  echo "💡 Please resolve merge conflicts before pushing."
+  exit 1
+fi
+
+echo "✅ All pre-push checks passed! 🎉"
+

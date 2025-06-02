@@ -1,0 +1,122 @@
+{
+  "header": "# 📋 Changelog\n\nAll notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.\n",
+  "types": [
+    {
+      "type": "feat",
+      "section": "✨ Features"
+    },
+    {
+      "type": "fix",
+      "section": "🐛 Bug Fixes"
+    },
+    {
+      "type": "perf",
+      "section": "⚡️ Performance Improvements"
+    },
+    {
+      "type": "revert",
+      "section": "⏪ Reverts"
+    },
+    {
+      "type": "docs",
+      "section": "📚 Documentation",
+      "hidden": false
+    },
+    {
+      "type": "style",
+      "section": "💄 Styles",
+      "hidden": true
+    },
+    {
+      "type": "chore",
+      "section": "🔧 Miscellaneous Chores",
+      "hidden": true
+    },
+    {
+      "type": "refactor",
+      "section": "♻️ Code Refactoring",
+      "hidden": false
+    },
+    {
+      "type": "test",
+      "section": "✅ Tests",
+      "hidden": true
+    },
+    {
+      "type": "build",
+      "section": "👷 Build System",
+      "hidden": false
+    },
+    {
+      "type": "ci",
+      "section": "💚 Continuous Integration",
+      "hidden": true
+    },
+    {
+      "type": "deps",
+      "section": "⬆️ Dependencies",
+      "hidden": false
+    },
+    {
+      "type": "security",
+      "section": "🔒 Security",
+      "hidden": false
+    },
+    {
+      "type": "i18n",
+      "section": "🌐 Internationalization",
+      "hidden": false
+    },
+    {
+      "type": "config",
+      "section": "⚙️ Configuration",
+      "hidden": true
+    },
+    {
+      "type": "wip",
+      "section": "🚧 Work in Progress",
+      "hidden": true
+    },
+    {
+      "type": "release",
+      "section": "🚀 Releases",
+      "hidden": false
+    }
+  ],
+  "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+  "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
+  "userUrlFormat": "{{host}}/{{user}}",
+  "releaseCommitMessageFormat": "🚀 chore(release): {{currentTag}}",
+  "issuePrefixes": ["#"],
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    }
+  ],
+  "packageFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    }
+  ],
+  "scripts": {
+    "prerelease": "pnpm run lint:all && pnpm test",
+    "postrelease": "echo '🎉 Release completed successfully!'"
+  },
+  "skip": {
+    "changelog": false,
+    "commit": false,
+    "tag": false
+  },
+  "dryRun": false,
+  "silent": false,
+  "tagPrefix": "v",
+  "releaseAs": null,
+  "prerelease": null,
+  "commitAll": false,
+  "sign": false,
+  "noVerify": false,
+  "changelogHeader": "# 📋 Changelog\n\nAll notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.\n"
+}
