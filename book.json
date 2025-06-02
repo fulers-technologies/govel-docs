@@ -1,5 +1,5 @@
 {
-  "root": ".",
+  "root": "./src",
   "title": "Govel Framework Documentation",
   "description": "Comprehensive documentation for the Govel Go framework - the Laravel-inspired framework for Go developers",
   "author": "Govel Team",

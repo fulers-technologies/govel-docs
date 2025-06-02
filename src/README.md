@@ -36,6 +36,7 @@ func main() {
 ## 🎯 Key Features
 
 ### 🔐 **Security First**
+
 - JWT authentication with automatic refresh
 - OAuth2 integration (Google, GitHub, Facebook)
 - Multi-factor authentication (TOTP, SMS, Email)
@@ -44,6 +45,7 @@ func main() {
 - Secure session management
 
 ### 🌐 **Web Excellence**
+
 - High-performance HTTP client and server
 - Advanced routing with parameter binding
 - Comprehensive middleware collection
@@ -51,6 +53,7 @@ func main() {
 - HTTP/2 and HTTP/3 support
 
 ### 💾 **Data Management**
+
 - Multi-database support (PostgreSQL, MySQL, SQLite, MongoDB)
 - Advanced query builder with type safety
 - Migration system with version control
@@ -58,12 +61,14 @@ func main() {
 - File storage abstraction (Local, S3, GCS, Azure)
 
 ### 🔄 **Background Processing**
+
 - Robust job queue system
 - Multiple queue backends (Redis, Database, SQS, RabbitMQ)
 - Job scheduling with cron-like syntax
 - Reliable message processing with retries
 
 ### 🏗️ **Architecture**
+
 - Dependency injection container
 - Service provider pattern
 - Event-driven architecture
@@ -84,24 +89,28 @@ This documentation is organized into several sections:
 ## 🚀 Why Choose Govel?
 
 ### ⏰ **Save 200+ Hours Per Project**
+
 - Pre-built authentication system
 - Ready-to-use database abstractions
 - Comprehensive middleware collection
 - Built-in caching and session management
 
 ### 🛡️ **Enterprise-Grade Security**
+
 - Security by default in every component
 - Regular security audits and updates
 - Compliance-ready features
 - Best practices built-in
 
 ### 📈 **Scalable from Day One**
+
 - Microservices architecture support
 - Horizontal scaling capabilities
 - Performance optimizations
 - Production-ready deployment
 
 ### 🎨 **Developer Experience**
+
 - Intuitive, Laravel-inspired API
 - Comprehensive documentation
 - Rich ecosystem of packages
@@ -131,4 +140,3 @@ Govel is open-source software licensed under the [MIT License](https://opensourc
 ---
 
 **Ready to revolutionize your Go development?** Let's get started! 🚀
-
